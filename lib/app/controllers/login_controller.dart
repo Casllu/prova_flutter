@@ -3,7 +3,7 @@ import '../models/user_model.dart';
 
 class LoginController {
   LoginRepositoryImpl? _loginRepository;
-
+ 
   LoginController() {
     _loginRepository = LoginRepositoryImpl();
   }

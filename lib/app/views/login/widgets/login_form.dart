@@ -1,7 +1,7 @@
 part of '../login_view.dart';
 
 class _LoginForm extends StatefulWidget {
-  const _LoginForm({super.key});
+  const _LoginForm();
 
   @override
   State<_LoginForm> createState() => _LoginFormState();
@@ -34,12 +34,8 @@ class _LoginFormState extends State<_LoginForm> {
             validator: Validatorless.multiple([
               Validatorless.required("Campo obrigatório"),
               Validatorless.max(20, "O máximo de caracteres é 20"),
-              (value) {
-                if (value != null && value.toString().endsWith(' ')) {
-                  return 'Senha não pode terminar com espaço';
-                }
-                return null;
-              }
+              //Criei esse validador para funcionar no padão do package Validatorless
+              validatorEndsWhithSpace(_userEC.text, 'Usuário'),
             ]),
           ),
           const SizedBox(height: 20),
@@ -52,19 +48,9 @@ class _LoginFormState extends State<_LoginForm> {
                 Validatorless.required("Campo obrigatório"),
                 Validatorless.min(2, "O mínimo de caracteres é 2"),
                 Validatorless.max(20, "O máximo de caracteres é 20"),
-                (value) {
-                  if (value != null && value.toString().endsWith(' ')) {
-                    return 'Não pode terminar com espaço';
-                  }
-                  return null;
-                },
-                (value) {
-                  if (value != null &&
-                      !RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value.toString())) {
-                    return 'A senha não pode conter caracteres especiais';
-                  }
-                  return null;
-                }
+                //Criei esses dois validadores para funcionar no padão do package Validatorless
+                validatorEndsWhithSpace(_passwordEC.text, 'Senha'),
+                validatorNotContaisSpecialCharacters(_passwordEC.text)
               ],
             ),
           ),
@@ -76,11 +62,10 @@ class _LoginFormState extends State<_LoginForm> {
 
               if (formValid) {
                 controller.login();
-
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const InfoView(),
+                    builder: (context) => const HomeView(),
                   ),
                 );
               }
@@ -89,5 +74,24 @@ class _LoginFormState extends State<_LoginForm> {
         ]),
       ),
     );
+  }
+
+  //Criei esses dois validadores para funcionar no padão do package Validatorless
+  FormFieldValidator<String> validatorEndsWhithSpace(String v, String campo) {
+    return (v) {
+      if (v != null && v.toString().endsWith(' ')) {
+        return '$campo não pode terminar com espaço';
+      }
+      return null;
+    };
+  }
+
+  FormFieldValidator<String> validatorNotContaisSpecialCharacters(String v) {
+    return (v) {
+      if (v != null && !RegExp(r'^[a-zA-Z0-9]+$').hasMatch(v.toString())) {
+        return 'A senha não pode conter caracteres especiais';
+      }
+      return null;
+    };
   }
 }

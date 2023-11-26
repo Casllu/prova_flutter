@@ -65,7 +65,5 @@ class TextformFieldCustom extends StatelessWidget {
     );
   }
 
-  @override
-  List<Object?> get props =>
-      [controller, validator, lable, obscureText, _obscureTextVN];
+
 }
