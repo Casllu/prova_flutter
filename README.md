@@ -14,4 +14,10 @@ Prova para vaga na Target Sistemas, utilizei meu conhecimento para executar da m
 - mocktail
 
 
+<<<<<<< HEAD
+=======
   
+
+
+
+>>>>>>> 50bdce48fd8bb4995bd9def16aadc1a5652879ef
